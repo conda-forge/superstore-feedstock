@@ -1,5 +1,5 @@
 {% set name = "superstore" %}
-{% set version = "0.1.0" %}
+{% set version = "0.1.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 025aecd6b074315b0e8570b1b5a5662d0c4435ef4989be8e96bba64e3ed8ffa9
+  sha256: dbc7c60a9ea65def3add748e82c20e481a726df7a26ff60c865cf264f1217e69
 
 build:
   number: 0
@@ -28,9 +28,9 @@ test:
   imports:
     - superstore
   commands:
-     - pip check
+    - pip check
   requires:
-     - pip
+    - pip
 
 about:
   home: https://github.com/timkpaine/superstore
