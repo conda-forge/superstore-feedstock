@@ -1,11 +1,11 @@
-About superstore
-================
+About superstore-feedstock
+==========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/superstore-feedstock/blob/main/LICENSE.txt)
 
 Home: https://github.com/timkpaine/superstore
 
 Package license: Apache-2.0
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/superstore-feedstock/blob/main/LICENSE.txt)
 
 Summary: Categorical data generator
 
