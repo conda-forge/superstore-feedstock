@@ -1,5 +1,5 @@
 {% set name = "superstore" %}
-{% set version = "0.1.2" %}
+{% set version = "0.1.3" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: e9a63a48187c95e6ba2a161b15bfeb31a4dd9efbf20ca666e082c2aa51cc98bb
+  sha256: 3ee8b068a465d0470f15d02d8a5aac77da18a8cfde585ba8eb2af1bb4761185f
 
 build:
   number: 0
@@ -21,7 +21,7 @@ requirements:
   run:
     - python >=3.6
     - faker >=1.0.1
-    - finance-enums >=0.1.0
+    - finance-enums >=0.1.0,<0.2
     - pandas >=0.23.4
 
 test:
