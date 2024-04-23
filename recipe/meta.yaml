@@ -20,6 +20,7 @@ requirements:
     - pip
   run:
     - python >=3.6
+    - coolname
     - faker >=1.0.1
     - pandas >=0.23.4
 
