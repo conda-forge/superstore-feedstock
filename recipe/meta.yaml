@@ -1,5 +1,5 @@
 {% set name = "superstore" %}
-{% set version = "0.2.4" %}
+{% set version = "0.2.5" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 35edcb91ea6b3a59925b9262cda63446464926dad6b5c2e94a8e2753cacb2302
+  sha256: 10536bdc2b211e58c8df9477766c7e00fe8f5d5537b587fa97e2b95fd7910900
 
 build:
   number: 0
