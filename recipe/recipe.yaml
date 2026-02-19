@@ -14,7 +14,9 @@ build:
   number: 0
   python:
     version_independent: true
-  script: python -m pip install . -vv --no-deps --no-build-isolation
+  script:
+    - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+    - python -m pip install . -vv --no-deps --no-build-isolation
   skip: not (match(python, python_min ~ ".*") and is_abi3)
 
 requirements:
@@ -22,6 +24,7 @@ requirements:
     - ${{ compiler('rust') }}
     - ${{ compiler('c') }}
     - ${{ stdlib("c") }}
+    - cargo-bundle-licenses
     - if: build_platform != target_platform
       then:
         - python
@@ -46,7 +49,9 @@ tests:
 
 about:
   license: Apache-2.0
-  license_file: LICENSE
+  license_file:
+    - LICENSE
+    - THIRDPARTY.yml
   summary: Categorical data generator
   homepage: https://github.com/1kbgz/superstore
   repository: https://github.com/1kbgz/superstore
