@@ -1,0 +1,56 @@
+context:
+  name: superstore
+  version: "0.3.1"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
+  sha256: 82990d917506c6f122bf98ab48c9c0a8f0b8be4df6cb2bb5f18825a5fbdb05f0
+
+build:
+  number: 0
+  script: python -m pip install . -vv --no-deps --no-build-isolation
+  skip: not (match(python, python_min ~ ".*") and is_abi3)
+  python:
+    version_independent: true
+
+requirements:
+  build:
+    - {{ compiler('rust') }}
+    - {{ compiler('c') }}
+    - {{ stdlib("c") }}
+    - if: build_platform != target_platform
+      then:
+        - python
+        - cross-python_${{ target_platform }}
+        - crossenv
+  host:
+    - python
+    - python-abi3
+    - pip
+    - hatchling
+    - hatch-rs
+  run:
+    - python
+    - pydantic >=2
+
+tests:
+  - python:
+      imports:
+        - superstore
+      pip_check: true
+      python_version: ${{ python_min }}.*
+
+about:
+  license: Apache-2.0
+  license_file: LICENSE
+  summary: Categorical data generator
+  homepage: https://github.com/1kbgz/superstore
+  repository: https://github.com/1kbgz/superstore
+
+extra:
+  recipe-maintainers:
+    - timkpaine
