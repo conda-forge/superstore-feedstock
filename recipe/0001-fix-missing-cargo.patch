@@ -1,0 +1,49 @@
+From e31dc6321c1c358e6a9b9793809e2e973d655bd1 Mon Sep 17 00:00:00 2001
+From: Tim Paine <3105306+timkpaine@users.noreply.github.com>
+Date: Thu, 19 Feb 2026 19:39:04 -0500
+Subject: [PATCH] fix missing cargo
+
+---
+ Cargo.toml | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
+ create mode 100644 Cargo.toml
+
+diff --git a/Cargo.toml b/Cargo.toml
+new file mode 100644
+index 0000000..c7515c4
+--- /dev/null
++++ b/Cargo.toml
+@@ -0,0 +1,30 @@
++[package]
++name = "superstore_py"
++version = "0.3.1"
++edition = "2021"
++publish = false
++
++[lib]
++name = "superstore"
++path = "src/lib.rs"
++crate-type = ["cdylib"]
++
++[dependencies]
++superstore = { path = "./rust", version = "*" }
++pyo3 = { version = "0.27.2", features = ["abi3-py310", "extension-module", "multiple-pymethods"] }
++uuid = { version = "1.0", features = ["v4"] }
++rand = "0.8"
++rand_distr = "0.4"
++chrono = "0.4"
++rayon = "1.10"
++arrow = { version = "53", default-features = false, features = ["ipc"] }
++nalgebra = "0.33"
++
++[profile.release]
++panic = 'abort'
++lto = true
++
++[workspace]
++members = [
++    "rust",
++]
+-- 
+2.53.0
+

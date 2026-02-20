@@ -9,6 +9,8 @@ package:
 source:
   url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
   sha256: 82990d917506c6f122bf98ab48c9c0a8f0b8be4df6cb2bb5f18825a5fbdb05f0
+  patches:
+    - 0001-fix-missing-cargo.patch
 
 build:
   number: 0
