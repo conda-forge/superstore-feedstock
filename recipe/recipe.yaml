@@ -17,7 +17,7 @@ build:
     version_independent: true
   script:
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
-    - python -m pip install . -vv --no-deps --no-build-isolation
+    - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: not (match(python, python_min ~ ".*") and is_abi3)
 
 requirements:
