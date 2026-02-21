@@ -1,6 +1,7 @@
 context:
   name: superstore
   version: "0.3.2"
+  python_min: ${{ python_min }}
 
 package:
   name: ${{ name|lower }}
@@ -21,15 +22,15 @@ build:
 
 requirements:
   build:
-    - ${{ compiler('rust') }}
-    - ${{ compiler('c') }}
-    - ${{ stdlib("c") }}
-    - cargo-bundle-licenses
     - if: build_platform != target_platform
       then:
         - python
         - cross-python_${{ target_platform }}
         - crossenv
+    - ${{ compiler('c') }}
+    - ${{ stdlib("c") }}
+    - ${{ compiler('rust') }}
+    - cargo-bundle-licenses
   host:
     - python
     - python-abi3
