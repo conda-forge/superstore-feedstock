@@ -17,7 +17,7 @@ build:
   script:
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
     - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: not (match(python, python_min ~ ".*") and is_abi3)
+  skip: is_abi3 and not is_python_min
 
 requirements:
   build:
@@ -32,13 +32,18 @@ requirements:
     - cargo-bundle-licenses
   host:
     - python
-    - python-abi3
     - pip
     - hatchling
     - hatch-rs
+    - if: is_abi3
+      then:
+      - python-abi3
   run:
     - python
     - pydantic >=2
+  ignore_run_exports:
+    from_package:
+      - cross-python_${{ target_platform }}
 
 tests:
   - python:
