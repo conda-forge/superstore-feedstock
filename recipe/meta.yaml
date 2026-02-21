@@ -1,46 +1,62 @@
-{% set name = "superstore" %}
-{% set version = "0.3.2" %}
+context:
+  name: superstore
+  version: "0.3.2"
 
 package:
-  name: {{ name|lower }}
-  version: {{ version }}
+  name: ${{ name|lower }}
+  version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
   sha256: 8292b7e5f915768ebad26b732438422a76b11866c58302076072a2dd4a2b287b
+  patches:
+    - 0001-fix-missing-cargo.patch
 
 build:
   number: 0
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  python:
+    version_independent: true
+  script:
+    - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+    - python -m pip install . -vv --no-deps --no-build-isolation
+  skip: not (match(python, python_min ~ ".*") and is_abi3)
 
 requirements:
+  build:
+    - ${{ compiler('rust') }}
+    - ${{ compiler('c') }}
+    - ${{ stdlib("c") }}
+    - cargo-bundle-licenses
+    - if: build_platform != target_platform
+      then:
+        - python
+        - cross-python_${{ target_platform }}
+        - crossenv
   host:
-    - python {{ python_min }}
+    - python
+    - python-abi3
     - pip
-    - setuptools
+    - hatchling
+    - hatch-rs
   run:
-    - python >={{ python_min }}
-    - coolname
-    - faker >=1.0.1
-    - pandas >=0.23.4
+    - python
+    - pydantic >=2
 
-test:
-  imports:
-    - superstore
-  commands:
-    - pip check
-  requires:
-    - pip
-    - python {{ python_min }}
+tests:
+  - python:
+      imports:
+        - superstore
+      pip_check: true
+      python_version: ${{ python_min }}.*
 
 about:
-  home: https://github.com/timkpaine/superstore
   license: Apache-2.0
-  license_family: Apache
-  license_file: LICENSE
+  license_file:
+    - LICENSE
+    - THIRDPARTY.yml
   summary: Categorical data generator
-  dev_url: https://github.com/timkpaine/superstore
+  homepage: https://github.com/1kbgz/superstore
+  repository: https://github.com/1kbgz/superstore
 
 extra:
   recipe-maintainers:
