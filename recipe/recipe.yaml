@@ -1,7 +1,6 @@
 context:
   name: superstore
   version: "0.3.2"
-  python_min: ${{ python_min }}
 
 package:
   name: ${{ name|lower }}
