@@ -15,8 +15,9 @@ build:
   python:
     version_independent: true
   script:
-    - export PYO3_PYTHON="$PYTHON"  # [unix]
-    - set PYO3_PYTHON=%PYTHON%"  # [win]
+    - if: unix
+      then: export PYO3_PYTHON="$PYTHON"
+      else: set "PYO3_PYTHON=%PYTHON%"
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
     - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: is_abi3 and not is_python_min
