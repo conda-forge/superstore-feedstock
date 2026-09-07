@@ -11,7 +11,7 @@ source:
   sha256: 8292b7e5f915768ebad26b732438422a76b11866c58302076072a2dd4a2b287b
 
 build:
-  number: 0
+  number: 1
   python:
     version_independent: true
   script:
@@ -40,20 +40,26 @@ requirements:
     - hatch-rs
     - if: is_abi3
       then:
-      - python-abi3
+        - python-abi3
   run:
     - python
     - pydantic >=2
-  ignore_run_exports:
-    from_package:
-      - cross-python_${{ target_platform }}
 
 tests:
   - python:
       imports:
         - superstore
       pip_check: true
-      python_version: ${{ python_min }}.*
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
+  - requirements:
+      run:
+        - abi3audit
+    script:
+      - if: unix
+        then: abi3audit $SP_DIR/superstore/superstore.abi3.so -s -v --assume-minimum-abi3 ${{ python_min }}
+        else: abi3audit %SP_DIR%/superstore/superstore.pyd -s -v --assume-minimum-abi3 ${{ python_min }}
 
 about:
   license: Apache-2.0
